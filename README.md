@@ -68,8 +68,10 @@ The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) 
 If there exist two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
 `v2`, we can remove `v2` and reduce `k` by `1`.
 You can visualize this rule this way: As `v1` and `v2` are connected, at least one of the has to be included in the
-vertex cover to cover the edge between them. Because `v2` also covers every edge `v1` covers, maybe even more, it
-is in every case worth it to take it over `v1`. If `v1` and `v2` have the same set of neighbours, this rule can
+vertex cover to cover the edge between them. If both `v1` and `v2` are deleted, there is no difference. If not, some of the neighbors have to be deleted. 
+In this cases there need to be less deletions because we are only handling the subset, not the bigger one.
+
+If `v1` and `v2` have the same set of neighbours, this rule can
 be applied in both direction with no difference.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
