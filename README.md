@@ -104,7 +104,7 @@ Most importantly, we can use this lower-bound to check if we need stop following
 ---
 
 The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
-be optimal, bot in many cases, it is surprisingly close.
+be optimal, but in many cases, it is surprisingly close.
 It works by always removing the vertex with the highest degree and adding 1 to the counter.
 If you can for example reduce all edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
 
