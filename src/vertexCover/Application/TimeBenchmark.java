@@ -50,10 +50,10 @@ public class TimeBenchmark {
 
                 //We use threads with a timeout so you can also include graphs that are too big to handle.
                 //After TIMEOUT seconds, the calculations on this graph are cancelled and the next graph is started.
-                Future f = null;
                 final long TIMEOUT = 300; // sec
+                Future f;
+                f = es.submit(() -> PrettyText.printResult(g));
                 try {
-                    f = es.submit(() -> PrettyText.printResult(g));
                     f.get(TIMEOUT, TimeUnit.SECONDS);
                     successfulRuns++;
                 } catch (TimeoutException e) {
