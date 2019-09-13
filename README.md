@@ -1,6 +1,6 @@
 # Vertex cover solver
 
-Reads in an undirected graph with no multiple edges per two vertices.
+Reads in an undirected graph with no multiple edges between any vertices.
 Calculates the minimum number of vertices you need to cover every edges at least once with a vertex. ([Vertex cover problem](https://en.wikipedia.org/wiki/Vertex_cover "Wikipedia"))
 
 ---
@@ -8,7 +8,8 @@ Calculates the minimum number of vertices you need to cover every edges at least
 ## Overview 
 We split the project into two packages *core* and *vertex cover*. We split the classes based on wether they had functionality for graphs themselves or for the vertex cover problem.
 
-By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
+By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. 
+And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 ### The main changes that improved the runtime on all inputs were:
 * Creating the method removeClique, which removes [cliques](https://en.wikipedia.org/wiki/Clique_(graph_theory)) of **any** size `n` when less than `n` vertices are connected outside of the clique.
