@@ -82,31 +82,32 @@ An implementation of the high-degree rule which removes vertices with more neigh
 
 ## Heuristics
 We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound ´`u`.
-Their meaning is that `k` >= `l` and `k` <= `l`. Therefore, we only need to check `l` for the range between these values.
+Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to check `K` for the range between these values.
 
 ---
 
-For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve itself, we
-try it by removing an arbitrary edge `e` for as long as edges exist. Because everytime we also remove the adjacent vertices ´a´ that `e` has touched, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
+For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
+try it by removing an arbitrary edge `e` for as long as edges exist. Because everytime we also remove the adjacent vertices `a`, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
 
 Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains. 
 Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
 We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore
-reduce the error we have in our heuristic.
+additionally reduce the error we have in our heuristic.
 
 ---
 
-The upper-bound is always a valid solution for the vertex cover problem. It may or may not
+The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
 be optimal, bot in many cases, it is surprisingly close.
 It works by always removing the vertex with the highest degree and adding 1 to the counter.
-If you can for example reduce the graph by remove the max-degree-vertex 5 times, the value 5 is an upper-bound. 
+If you can for example reduce all edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
 
 ---
 
 
 ## Undo-Stack
-An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into the search tree. This stack saves the inverse operations of what we do in the search tree and if we find out that this path in the search tree doesn't work, we can trace back to the fork and take the other path in the tree.
+An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into the search tree. This stack saves the inverse operations of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
 
-While this change was beneficial from what our tests say so far, the runtime reduction was only about 20%.
+While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was only about 20%.
+
 The rules described above on the other hand changed it by a factor of at least 10 each to put it into persepective.
