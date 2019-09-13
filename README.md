@@ -5,7 +5,7 @@ Calculates the minimum number of vertices you need to cover every edges at least
 
 ---
 ## Datastructure
-For representing the graph we decided to use a Hashmap that maps from integer to a Hashset of integers. This means: The key is the ID of a vertex and the value (the set) are all of the neighbours. 
+For representing the graph we decided to use a **Hashmap** that maps from integer to a **Hashset** of integers. This means: The key is the ID of a vertex and the value (the set) are all of the neighbours. 
 As an example for the following graph:
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/graph.png" width="400" alt="simple graph">
 * 1 -> {2,3}
@@ -23,30 +23,30 @@ Also, we don't have to manage any indexes of a list if we use a set.
 
 ## Reduction Rules
 
-* removeCliques: 
+### removeCliques: 
 
-A clique is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
-two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of size n and only n-1 vertices
-are connected to a vertex outside of the clique, we can remove the clique and reduce the parent instance by n-1.
+A **clique** is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
+two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of **size n and only n-1 vertices
+are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by n-1.
 This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.
 
-* removeP3:
+### removeP3:
 
-If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves not neighbours of each other, we can
+If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves **not neighbours of each other**, we can
 remove "key", and merge both neighbours together, which means deleting one of them and moving the connections of the
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.
 
-* removeBigNeighbor:
+### removeBigNeighbor:
 
-If there exist two adjacent vertices v1 and v2 and the set of neighbours of v1 is a subset of the neighbours of
+If there exist two adjacent vertices v1 and v2 and the set of neighbours of v1 is a **subset** of the neighbours of
 v2, we can remove v2 and reduce k by 1.
 You can visualize this rule this way: As v1 and v2 are connected, at least one of the has to be included in the
 vertex cover to cover the edge between them. Because v2 also covers every edge v1 covers, maybe even more, it
 is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
 be applied in both direction with no difference.
 
-* removeHighDeg:
+### removeHighDeg:
 
 An implementation of the high-degree rule which removes vertices with more neighbours than the value of K.
 
@@ -55,9 +55,9 @@ An implementation of the high-degree rule which removes vertices with more neigh
 ## Overview 
 We split the project into two packages *core* and *vertex cover*, for the graph functionality that is indipendent from the problem and for that parts that aren't.
 
-By now it contains many parts that don't speed up calculation on small inputs noticably. On very big instances though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
+By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
-The main changes that improved the runtime on all inputs were:
+### The main changes that improved the runtime on all inputs were:
 * Creating the method removeClique, which removes cliques of any size n when less than n vertices are connected outside of the clique.
 * Applying as many rules before you try to solve for K, so you only have to do it once (doen't work for the high-degree rule, as it depends on the value K of an instance, but all other rules are applicable).
 * Using the datastructures Hashmap and Hashset.
