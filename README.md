@@ -8,10 +8,10 @@ Calculates the minimum number of vertices you need to cover every edges at least
 For representing the graph we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. This means: The key is the ID of a vertex and the value (the set) are all of the neighbours. 
 As an example for the following graph:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/graph.png" width="40%" alt="simple graph">
-* 1 -> {2,3}
-* 2 -> {3,1}
-* 3 -> {2,4,1}
-* 4 -> {3}
+* 1 → {2,3}
+* 2 → {3,1}
+* 3 → {2,4,1}
+* 4 → {3}
 
 ---
 
