@@ -23,21 +23,21 @@ Also, we don't have to manage any indexes of a list if we use a set.
 
 ## Reduction Rules
 
-### removeCliques: 
+* ### removeCliques: 
 
 A **clique** is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
 two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of **size n and only n-1 vertices
 are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by n-1.
 This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.
 
-### removeP3:
+* ### removeP3:
 
 If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves **not neighbours of each other**, we can
 remove "key", and merge both neighbours together, which means deleting one of them and moving the connections of the
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.
 
-### removeBigNeighbor:
+* ### removeBigNeighbor:
 
 If there exist two adjacent vertices v1 and v2 and the set of neighbours of v1 is a **subset** of the neighbours of
 v2, we can remove v2 and reduce k by 1.
@@ -46,7 +46,7 @@ vertex cover to cover the edge between them. Because v2 also covers every edge v
 is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
 be applied in both direction with no difference.
 
-### removeHighDeg:
+* ### removeHighDeg:
 
 An implementation of the high-degree rule which removes vertices with more neighbours than the value of K.
 
