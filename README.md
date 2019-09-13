@@ -23,7 +23,7 @@ Also, we don't have to manage any indexes of a list if we use a set.
 
 ## Reduction Rules
 
-The reduction rules are all applied exhaustively, meaning the are repeated as often as possible until they don't change anything anymore. For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. We always have to apply all rules, because one rule may create an opportunity for another rule to be applied. As we can't really anticipate these side-effects (yet?), so we always have to apply all of them.
+The reduction rules are all applied exhaustively, meaning the are repeated as often as possible until they don't change anything anymore. For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. We always have to apply all rules, because one rule may create an opportunity for another rule to be applied. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
 
 
 * ### removeCliques: 
@@ -34,14 +34,14 @@ are connected to a vertex outside of the clique**, we can remove the clique and 
 This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
-The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by `2` (number of neighbours of `1`).
+The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).
 
 
 * ### removeP3:
 
-If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves **not neighbours of each other**, we can
-remove "key", and merge both neighbours together, which means deleting one of them and moving the connections of the
-deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
+If a vertex `key` is ONLY connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can
+remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
+deleted one onto the remaining one. This is done in the method *mergeVertices*. It doesn't really affect the runtime
 in which direction the merge operation is done.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">  
@@ -50,11 +50,11 @@ The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) 
 
 * ### removeBigNeighbour:
 
-If there exist two adjacent vertices v1 and v2 and the set of neighbours of v1 is a **subset** of the neighbours of
-v2, we can remove v2 and reduce k by 1.
-You can visualize this rule this way: As v1 and v2 are connected, at least one of the has to be included in the
-vertex cover to cover the edge between them. Because v2 also covers every edge v1 covers, maybe even more, it
-is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
+If there exist two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
+`v2`, we can remove `v2` and reduce `k` by `1`.
+You can visualize this rule this way: As `v1` and `v2` are connected, at least one of the has to be included in the
+vertex cover to cover the edge between them. Because `v2` also covers every edge `v1` covers, maybe even more, it
+is in every case worth it to take it over `v1`. If `v1` and `v2` have the same set of neighbours, this rule can
 be applied in both direction with no difference.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
@@ -80,16 +80,16 @@ By now it contains many parts that don't speed up calculation on small inputs no
 ---
 
 ## Heuristics
-We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound ´l´ and upper-bound ´u´.
-Their meaning is that ´k´ >= ´l´ and ´k´ <= ´u´. Therefore, we only need to check ´k´ for the range between these values.
+We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound ´`u`.
+Their meaning is that `k` >= `l` and `k` <= `l`. Therefore, we only need to check `l` for the range between these values.
 
 ---
 
 For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve itself, we
-try it by removing an arbitrary edge ´e´ for as long as edges exist. Because everytime we also remove the adjacent vertices ´a´ that ´e´ has touched, we make sure no other edges exist that could touch ´e´. While this method already works, it is not perfect.
+try it by removing an arbitrary edge `e` for as long as edges exist. Because everytime we also remove the adjacent vertices ´a´ that `e` has touched, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
 
-Imagine a triangle where you remove an edge ´e´. As you also remove its adjacent vertices ´a´, and only one vertex ´o´, the one on the opposite site, remains. 
-Now only ´o´ is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with ´k´ = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
+Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains. 
+Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
 We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore
 reduce the error we have in our heuristic.
