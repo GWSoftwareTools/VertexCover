@@ -79,6 +79,6 @@ By now it contains many parts that don't speed up calculation on small inputs no
 ---
 
 ## Undo-Stack
-An [UndoStack](../src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into
+An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into
 the search tree. While this change was beneficial from what our tests say so far, the runtime reduction was only about 20%.
 The rules described above on the other hand changed it by a factor of at least 10 to put it into persepective.
