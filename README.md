@@ -39,7 +39,7 @@ remove "key", and merge both neighbours together, which means deleting one of th
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.
 
-* ### removeBigNeighbor:
+* ### removeBigNeighbour:
 
 If there exist two adjacent vertices v1 and v2 and the set of neighbours of v1 is a **subset** of the neighbours of
 v2, we can remove v2 and reduce k by 1.
