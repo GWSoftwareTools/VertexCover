@@ -20,12 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+---
 
 All graphs in the data folder are downloaded from networkrepository.com!  
+
 @inproceedings{nr,  
       title = {The Network Data Repository with Interactive Graph Analytics and Visualization},  
       author={Ryan A. Rossi and Nesreen K. Ahmed},  
       booktitle = {AAAI},  
       url={http://networkrepository.com},  
       year={2015}  
-  }  
+  } 
