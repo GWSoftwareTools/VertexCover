@@ -33,7 +33,7 @@ are connected to a vertex outside of the clique**, we can remove the clique and 
 This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
-The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by `3`.
+The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by `2` (number of neighbours of `1`).
 
 
 * ### removeP3:
