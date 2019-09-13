@@ -116,4 +116,4 @@ An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also c
 
 While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.
 
-The rules described above on the other hand changed it by a factor of at least 10 each to put it into persepective.
+Some rules on the other hand changed it by a factor of at least 10 each to put it into persepective.
