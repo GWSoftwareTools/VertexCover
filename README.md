@@ -95,6 +95,8 @@ Now only `o` is left without edges. We know this is not correct, we cant have a 
 We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore
 additionally reduce the error we have in our heuristic.
 
+Most importantly, we can use this lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any time, we know that this instance can't be solved and we can go back up the search tree immediatly.
+
 ---
 
 The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
