@@ -85,7 +85,7 @@ An implementation of the high-degree rule which removes vertices with more neigh
 ---
 
 ## Heuristics
-We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound ´`u`.
+We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound `u`.
 Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to check `K` for the range between these values.
 
 ---
