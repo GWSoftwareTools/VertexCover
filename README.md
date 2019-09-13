@@ -38,7 +38,7 @@ As an example here is the map for the following graph:
 
 ## Reduction Rules
 
-The reduction rules are all applied exhaustively, meaning the are repeated as often as possible until they don't change anything anymore. For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. We always have to apply all rules, because one rule may create an opportunity for another rule to be applied. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
+The reduction rules are all applied exhaustively, meaning the are repeated as often as possible until they don't change anything anymore. For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. We always have to apply all rules, because one rule may create an opportunity for another rule to be used. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
 
 
 * ### removeCliques: 
