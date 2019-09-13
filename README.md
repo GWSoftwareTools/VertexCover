@@ -6,19 +6,19 @@ Calculates the minimum number of vertices you need to cover every edges at least
 ---
 
 ## Overview 
-We split the project into two packages *core* and *vertex cover*, for the graph functionality that is indipendent from the problem and for that parts that aren't.
+We split the project into two packages *core* and *vertex cover*. We split the classes based on wether they had functionality for graphs themselves or for the vertex cover problem.
 
 By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 ### The main changes that improved the runtime on all inputs were:
-* Creating the method removeClique, which removes cliques of any size `n` when less than `n` vertices are connected outside of the clique.
-* Applying as many rules as you can on the graph before you try to solve for `k`, so you only have to do it once (doesn't work for the high-degree rule, as it depends on the value `k` of an instance, but all other rules are applicable).
+* Creating the method removeClique, which removes [cliques](https://en.wikipedia.org/wiki/Clique_(graph_theory)) of **any** size `n` when less than `n` vertices are connected outside of the clique.
+* Applying as many rules as you can on the graph before you try to solve for `k`, so you only have to apply them once (doesn't work for the high-degree rule though, as it depends on the value `k` of an instance. But all other rules are applicable, you just have to track the change, we chose to use an instance for that).
 * Using the datastructures Hashmap and Hashset.
 
 ---
 
 ## Datastructure
-For representing the graph we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. This means: The key is the ID of a vertex and the value (the set) are all of the neighbours. 
+For representing the graph we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. This means: The *key* is the ID of a vertex and the *value* (the set) are all of its neighbours. 
 As an example for the following graph:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/graph.png" width="40%" alt="simple graph">
 * 1 → {2,3}
@@ -28,9 +28,9 @@ As an example for the following graph:
 
 ---
 
-This method uses way less space than any solution with a matrix, and still has reasonably low runtime (the runtime is mostly
-dependent on the logic of the searchtree anyway).
-Also, we don't have to manage any indexes of a list if we use a set.
+* This method uses way **less space** than any solution with a matrix (unless the graph contains near the maximum amount of edges, which doesn't tend to happen on big graphs where it starts to matter).
+* It also has reasonably **low runtime** (the runtime is mostly dependent on the logic of the searchtree anyway).
+* Also, we do **less erros**, because we don't have to manage any indexes of a list if we use a set.
 
 ---
 
@@ -50,7 +50,7 @@ Example:
 The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).
 
 
-* ### removeP3:
+* ### removeP3: (called *P3* because its a path of length 3, don't judge)
 
 If a vertex `key` is ONLY connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can
 remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
