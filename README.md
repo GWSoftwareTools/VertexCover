@@ -14,7 +14,7 @@ And as we're mostly optimizing for the worst case anyway, we're willing to take 
 
 ### The main changes that improved the runtime on all inputs were:
 * Creating the method removeClique, which removes [cliques](https://en.wikipedia.org/wiki/Clique_(graph_theory)) of **any** size `n` when less than `n` vertices are connected outside of the clique.
-* Applying as many rules as you can on the graph before you try to solve for `k`, so you only have to apply them once (doesn't work for the high-degree rule though, as it depends on the value `k` of an instance. But all other rules are applicable, you just have to track the change, we chose to use an instance for that).
+* Applying as many rules as you can on the graph before you try to solve for `k`, so you only have to apply them once (doesn't work for the high-degree rule though, as it depends on the value `k` of an instance). But all other rules are applicable, you just have to track the change, we chose to use an instance for that.
 * Using the datastructures Hashmap and Hashset.
 
 ---
