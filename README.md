@@ -1,6 +1,6 @@
 # Vertex cover solver
 
-Reads in undirected graph with no multiple edges per two vertices.
+Reads in an undirected graph with no multiple edges per two vertices.
 Calculates the minimum number of vertices you need to cover every edges at least once with a vertex. (Vertex cover problem)
 
 ---
