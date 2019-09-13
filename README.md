@@ -31,6 +31,8 @@ A **clique** is a set of vertices which are ALL connected to each other vertex i
 two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of **size n and only n-1 vertices
 are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by n-1.
 This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.
+Example:
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="400" alt="removeCliques">
 
 * ### removeP3:
 
@@ -38,6 +40,9 @@ If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are the
 remove "key", and merge both neighbours together, which means deleting one of them and moving the connections of the
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.
+Example:
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="400" alt="removeP3">
+
 
 * ### removeBigNeighbour:
 
@@ -47,6 +52,9 @@ You can visualize this rule this way: As v1 and v2 are connected, at least one o
 vertex cover to cover the edge between them. Because v2 also covers every edge v1 covers, maybe even more, it
 is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
 be applied in both direction with no difference.
+Example:
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="400" alt="removeBigNeighbour">
+
 
 * ### removeHighDeg:
 
