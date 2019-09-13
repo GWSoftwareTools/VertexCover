@@ -207,11 +207,14 @@ public class SearchTree {
     private static boolean removeBigNeighbour(Instance inst) {
         boolean changed = false;
         for (int a : inst.graph.getVertices()) {
-            neighbourLoop:
-            for (int b : inst.graph.getNeighbours(a)) {
 
-                for (int i : inst.graph.getNeighbours(a)) {
-                    if (!(inst.graph.getNeighbours(b).contains(i) || i == b)) {
+            Set<Integer> neighboursA = inst.graph.getNeighbours(a);
+
+            neighbourLoop:
+            for (int b : neighboursA) {
+                Set<Integer> neighboursB = inst.graph.getNeighbours(b);
+                for (int i : neighboursA) {
+                    if (!(neighboursB.contains(i) || i == b)) {
                         continue neighbourLoop;
                     }
                 }
