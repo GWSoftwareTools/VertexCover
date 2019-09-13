@@ -79,6 +79,31 @@ By now it contains many parts that don't speed up calculation on small inputs no
 
 ---
 
+## Heuristics
+We try to "guess" what K will be in two different methods. They are called lower-bound ´l´ and upper-bound ´u´.
+Their meaning is that ´k´ >= ´l´ and ´k´ <= ´u´. Therefore, we only need to check ´k´ for the range between these values.
+
+---
+
+For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve itself, we
+try it by removing an arbitrary edge ´e´ for as long as edges exist. Because everytime we also remove the adjacent vertices ´a´ that ´e´ has touched, we make sure no other edges exist that could touch ´e´. While this method already works, it is not perfect.
+
+Imagine a triangle where you remove an edge ´e´. As you also remove its adjacent vertices ´a´, and only one vertex ´o´, the one on the opposite site, remains. 
+Now only ´o´ is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with ´k´ = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
+
+We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore
+reduce the error we have in our heuristic.
+
+---
+
+The upper-bound is always a valid solution for the vertex cover problem. It may or may not
+be optimal, bot in many cases, it is surprisingly close.
+It works by always removing the vertex with the highest degree and adding 1 to the counter.
+If you can for example reduce the graph by remove the max-degree-vertex 5 times, the value 5 is an upper-bound. 
+
+---
+
+
 ## Undo-Stack
 An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into
 the search tree. While this change was beneficial from what our tests say so far, the runtime reduction was only about 20%.
