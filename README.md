@@ -80,7 +80,7 @@ By now it contains many parts that don't speed up calculation on small inputs no
 ---
 
 ## Heuristics
-We try to "guess" what K will be in two different methods. They are [called lower-bound](./src/vertexCover/advanced/GraphUtil.java "lower-bound") ´l´ and upper-bound ´u´.
+We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound ´l´ and upper-bound ´u´.
 Their meaning is that ´k´ >= ´l´ and ´k´ <= ´u´. Therefore, we only need to check ´k´ for the range between these values.
 
 ---
