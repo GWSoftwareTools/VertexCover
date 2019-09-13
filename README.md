@@ -52,7 +52,7 @@ Example:
 The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).
 
 
-* ### removeP3: (called *P3* because its a path of length 3, don't judge)
+* ### removeP3: (called *P3* because it's a path of length 3, don't judge)
 
 If a vertex `key` is ONLY connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can
 remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
