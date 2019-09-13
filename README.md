@@ -31,7 +31,7 @@ The reduction rules are all applied exhaustively, meaning the are repeated as of
 A **clique** is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
 two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of **size n and only `n-1` vertices
 are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.
-This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.  
+This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
 The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by `2` (number of neighbours of `1`).
