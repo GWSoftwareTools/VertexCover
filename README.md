@@ -32,7 +32,9 @@ two connected vertices or a triangle are (simple) cases of a clique. If we find 
 are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.
 This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.  
 Example:  
-<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
+The vertices `1`, `2` and `3` have edges between each other
+
 
 * ### removeP3:
 
@@ -41,7 +43,8 @@ remove "key", and merge both neighbours together, which means deleting one of th
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.  
 Example:  
-<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">  
+The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) was deleted and their neighbours merged.
 
 
 * ### removeBigNeighbour:
@@ -53,7 +56,8 @@ vertex cover to cover the edge between them. Because v2 also covers every edge v
 is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
 be applied in both direction with no difference.  
 Example:  
-<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
+Because vertex `2` has all the neighbours vertex `1` has and even some more, vertex `2` was deleted.  
 
 
 * ### removeHighDeg:
