@@ -7,7 +7,8 @@ import java.util.*;
 
 import static vertexCover.advanced.SearchTree.applyRules;
 
-/**Provides advanced information about a graph. The core functionality for graphs are in the graph class.
+/**
+ * Provides advanced information about a graph. The core functionality for graphs are in the graph class.
  * Some of the methods are only useful for the vertex cover problem, not for other issues.
  */
 public class GraphUtil {
@@ -34,7 +35,7 @@ public class GraphUtil {
     /**
      * This method uses an iterator through the vertices. Therefore, if you don't change the graph, if you call this method
      * 2 times in a row, it will return the same pair both times. Therefore it does NOT return a random pair.
-     *
+     * <p>
      * This method is used as utility for other methods who need a pair of vertices that are connected.
      *
      * @param g The target graph.
@@ -50,7 +51,8 @@ public class GraphUtil {
         return null;    //normally doesn't happen
     }
 
-    /**In EVERY case the solution of this method is a valid value for k of the vertex cover problem. It may or may not 
+    /**
+     * In EVERY case the solution of this method is a valid value for k of the vertex cover problem. It may or may not
      * be optimal, bot in many cases, it is surprisingly close.
      * It works by always removing the vertex with the highest degree and adding 1 to the result.
      * If you can for example reduce the graph by remove the max-degree-vertex 5 times, the value 5 is an upper-bound.
@@ -73,10 +75,9 @@ public class GraphUtil {
     }
 
     /**
-     *
-     * @param g The graph we want to test. Does NOT need to be a copy (is copied inside of method).
+     * @param g          The graph we want to test. Does NOT need to be a copy (is copied inside of method).
      * @param applyRules This method doesn't work unless triangles are removed beforehand. If the reduction rules
-     *  were already applied, "applyRules" can be set to false. If it needs to be done inside this method, set it to true.
+     *                   were already applied, "applyRules" can be set to false. If it needs to be done inside this method, set it to true.
      * @return A value that is lower or equal to any valid K for a vertex cover.
      */
     public static int getLowerBound(Graph g, boolean applyRules) {

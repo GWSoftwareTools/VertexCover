@@ -14,9 +14,10 @@ class PrettyText {
     /**
      * This method is used as a tool for human users. It is not needed for getting the results.
      * It only provides some context about the graphs.
+     *
      * @param g The target graph.
      */
-    public static void printResult(Graph g) {
+    static void printResult(Graph g) {
         printAnalysis(g);
         int safePoint = g.getSafePoint();
         int result = SearchTree.minVertexCover(g);
@@ -26,21 +27,24 @@ class PrettyText {
 
     /**
      * Prints some main properties of the graph.
+     *
      * @param g The analyzed graph.
      */
-    static void printAnalysis(Graph g) {
+    private static void printAnalysis(Graph g) {
         System.out.println(
-            String.format(formatter, "Vertices:") + g.getVertices().size() + "\n" +
-            String.format(formatter, "Edges:") + g.getEdgeCount() + "\n" +
-            String.format(formatter, "Max-Degree:") + g.degree(GraphUtil.maxDegreeID(g)) + "\n" +
-            String.format(formatter, "Disjoint graphs:") + g.getDisjointGraphs().size());
+                String.format(formatter, "Vertices:") + g.getVertices().size() + "\n" +
+                        String.format(formatter, "Edges:") + g.getEdgeCount() + "\n" +
+                        String.format(formatter, "Max-Degree:") + g.degree(GraphUtil.maxDegreeID(g)) + "\n" +
+                        String.format(formatter, "Disjoint graphs:") + g.getDisjointGraphs().size());
     }
 
     /**
+     * Formats a given amount of nanoseconds into a human-readable string.
+     *
      * @param nanos A time interval in nanoseconds
-     * @return A string with an equal time interval, but formatted in human-readable units.
+     * @return A string with an equal time interval, but formatted in human-readable units
      */
-    public static String prettyTime(long nanos) {
+    static String prettyTime(long nanos) {
         // hours, minutes, seconds, millis, micros, nanos
         int hours = 0;
         int mins = 0;

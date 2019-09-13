@@ -16,7 +16,7 @@ import java.util.Arrays;
  * edges we need at least one vertex. Therefore, the real solution for the vertex cover problem must be greater-than
  * this number, as it also covers these edges.
  */
-public class LowerBound {
+class LowerBound {
     private static int[] results = {2630, 38, 1088, 2203, 149, 59, 594, 158, 30, 34, 20, 14, 10, 4, 21190};
 
     @Test

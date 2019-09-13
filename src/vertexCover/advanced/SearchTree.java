@@ -8,11 +8,13 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-/**Searches for a minimal integer K which stands for the number of vertices you need at least to cover every vertex in
+/**
+ * Searches for a minimal integer K which stands for the number of vertices you need at least to cover every vertex in
  * the input graph.
  */
 public class SearchTree {
-    /**The main function that is called to calculate K.
+    /**
+     * The main function that is called to calculate K.
      *
      * @param g The target graph.
      * @return K
@@ -32,12 +34,14 @@ public class SearchTree {
         return result + change;
     }
 
-    /**Actually calculates K for a given (sub-)graph. We know that the input graph is connected, because this method
+    /**
+     * Actually calculates K for a given (sub-)graph. We know that the input graph is connected, because this method
      * is called in "minVertexCover". Would work on disconnected graphs too, but would take unnecessarily long.
+     *
      * @param g The target graph
      * @return K
      */
-    static int findK(Graph g) {
+    private static int findK(Graph g) {
         //Like usually, the reduction rules are applied.
         Instance inst = applyRules(g);
         g = inst.graph;
@@ -58,7 +62,8 @@ public class SearchTree {
         return maxK + change;
     }
 
-    /**We have a separate method "solveI" for instances, because we can only use the high-degree-rules which removes
+    /**
+     * We have a separate method "solveI" for instances, because we can only use the high-degree-rules which removes
      * vertices with a degree greater than K in instances, not as a preparation for graphs because the don't have a K
      * to use for this rule.
      *
@@ -92,7 +97,8 @@ public class SearchTree {
         return solveI(inst); // instNeighborsDelete
     }
 
-    /**Applies all reduction rules except the high-degree-rule, because graphs don't have value K to use for it.
+    /**
+     * Applies all reduction rules except the high-degree-rule, because graphs don't have value K to use for it.
      *
      * @param g The graph we want to prepare before solving
      * @return "i": An Instance object with an optimized graph. By how many points it was improved is stored
@@ -111,7 +117,9 @@ public class SearchTree {
         return inst;
     }
 
-    /**Applies all rules we currently have implemented.
+    /**
+     * Applies all rules we currently have implemented.
+     *
      * @param inst Target instance
      * @return is void because we just change the parameter-object
      */
@@ -122,11 +130,11 @@ public class SearchTree {
         }
     }
 
-    /**An clique is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
+    /**
+     * An clique is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
      * two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of size n and only n-1 vertices
      * are connected to a vertex outside of the clique, we can remove the clique and reduce the parent instance by n-1.
      * This is a generalization of the "singleton" and "degree-one" rule => It also works on arbitrarily big cliques.
-     *
      *
      * @param inst Target instance
      * @return True if this method changed the instance. False otherwise.
@@ -157,7 +165,8 @@ public class SearchTree {
         return changed;
     }
 
-    /**If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves not neighbours, we can
+    /**
+     * If a vertex "key" is ONLY connected to 2 neighbours "nb1" and "nb2", who are themselves not neighbours, we can
      * remove "key", and merge both neighbours together, which means deleting one of them and moving the connections of the
      * deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
      * in which direction the merge operation is done.
@@ -184,7 +193,8 @@ public class SearchTree {
         return changed;
     }
 
-    /**If there exist two adjacent vertices "v1" and "v2" and the set of neighbours of "v1" is a subset of the neighbours of
+    /**
+     * If there exist two adjacent vertices "v1" and "v2" and the set of neighbours of "v1" is a subset of the neighbours of
      * "v2", we can remove "v2" and reduce k by 1.
      * You can visualize this rule this way: As "v1" and "v2" are connected, at least one of the has to be included in the
      * vertex cover to cover the edge between them. Because "v2" also covers every edge "v1" covers, maybe even more, it
@@ -230,7 +240,7 @@ public class SearchTree {
                         fourthVertexSet.retainAll(inst.graph.getNeighbors(b));
                         fourthVertexSet.remove(key);
 
-                        for (int fourthVertex : fourthVertexSet ) {
+                        for (int fourthVertex : fourthVertexSet) {
                             HashSet newRect = new HashSet(4);
                             Collections.addAll(newRect, key, a, b, fourthVertex);
                             rectangles.add(new HashSet<>());
@@ -244,6 +254,7 @@ public class SearchTree {
 
     /**
      * An implementation of the high-degree rule which removes vertices with more neighbours than the value of K.
+     *
      * @param inst Target instance.
      * @return True if this method changed the instance. False otherwise.
      */
@@ -260,10 +271,9 @@ public class SearchTree {
     }
 
     /**
-     *
-     * @param g The target graph.
+     * @param g    The target graph.
      * @param from This vertex is removed and its edges are add to "to".
-     * @param to This vertex receives the edges from "from".
+     * @param to   This vertex receives the edges from "from".
      */
     private static void mergeVertices(Graph g, int from, int to) {
         g.getNeighbors(from).forEach(x -> g.addEdge(to, x));

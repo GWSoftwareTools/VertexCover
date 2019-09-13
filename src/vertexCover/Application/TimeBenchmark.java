@@ -10,8 +10,8 @@ import java.util.concurrent.*;
  * It does NOT check if the results are correct. For this, please go to the test-folder.
  */
 public class TimeBenchmark {
-    //If you want to run the calculations multiple times to get a more precise result by averaging the times,
-    //this print-stream makes sure the results and info about the graph are only printed once (on the last run)
+    // If you want to run the calculations multiple times to get a more precise result by averaging the times,
+    // this print-stream makes sure the results and info about the graph are only printed once (on the last run)
     private final static PrintStream ignore = new PrintStream(new OutputStream() {
         @Override
         public void write(int b) {
@@ -30,7 +30,7 @@ public class TimeBenchmark {
 
     private static void runAllFiles(int runs) throws IOException {
         System.out.println("Running the algorithm on each file " + runs + " times and printing the last result:\n");
-        ExecutorService executor = Executors.newSingleThreadExecutor();
+        ExecutorService es = Executors.newSingleThreadExecutor();
 
         //the name of the folder which contains the text files for the graphs
         File dir = new File("data");
@@ -53,7 +53,7 @@ public class TimeBenchmark {
                 Future f = null;
                 final long TIMEOUT = 300; // sec
                 try {
-                    f = executor.submit(() -> PrettyText.printResult(g));
+                    f = es.submit(() -> PrettyText.printResult(g));
                     f.get(TIMEOUT, TimeUnit.SECONDS);
                     successfulRuns += runs;
                 } catch (TimeoutException e) {
@@ -74,6 +74,6 @@ public class TimeBenchmark {
                     + String.format(PrettyText.formatter, "Runs in time:") + successfulRuns
                     + "\n\n---------------------------------------------------\n");
         }
-        executor.shutdown();
+        es.shutdown();
     }
 }

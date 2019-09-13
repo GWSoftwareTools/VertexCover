@@ -31,7 +31,7 @@ public class Graph {
                 continue;
             }
             i = new Scanner(line);
-                addEdge(i.nextInt(), i.nextInt());
+            addEdge(i.nextInt(), i.nextInt());
             i.close();
         }
         br.close();
@@ -159,6 +159,7 @@ public class Graph {
 
     /**
      * Returns the amount of vertices in this {@link Graph}.
+     *
      * @return the amount of vertices in this {@link Graph}
      */
     public int size() {
@@ -167,6 +168,7 @@ public class Graph {
 
     /**
      * Returns whether there are vertices in this {@link Graph}.
+     *
      * @return true, if there are no vertices in this {@link Graph}; false otherwise
      */
     public boolean isEmpty() {
@@ -175,6 +177,7 @@ public class Graph {
 
     /**
      * Returns the amount of edges in this {@link Graph}.
+     *
      * @return the amount of edges in this {@link Graph}
      */
     public int getEdgeCount() {
@@ -188,6 +191,7 @@ public class Graph {
 
     /**
      * Returns whether there are edges in this {@link Graph}.
+     *
      * @return true, if there are edges in this {@link Graph}; false otherwise
      */
     public boolean hasEdges() {
@@ -273,7 +277,8 @@ public class Graph {
         return disjointGraphs;
     }
 
-    /**@return an Integer representing the current state of this {@link Graph}
+    /**
+     * @return an Integer representing the current state of this {@link Graph}
      */
     public int getSafePoint() {
         return undoStack.size();
@@ -281,6 +286,7 @@ public class Graph {
 
     /**
      * Restores a state of this {@link Graph} saved in an Integer.
+     *
      * @param safePoint is the ID of the state this {@link Graph} will be set to
      */
     public void restore(int safePoint) {

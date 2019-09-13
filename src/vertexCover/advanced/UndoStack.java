@@ -35,6 +35,7 @@ public class UndoStack {
 
     /**
      * Returns the number of {@link UndoItem}s in this {@link UndoStack}.
+     *
      * @return the number of {@link UndoItem}s in this {@link UndoStack}
      */
     public int size() {
@@ -43,6 +44,7 @@ public class UndoStack {
 
     /**
      * Returns the last (newest) {@link UndoItem} on this {@link UndoStack}.
+     *
      * @return the last (newest) {@link UndoItem} on this {@link UndoStack}
      */
     public UndoItem pop() {
@@ -57,6 +59,7 @@ public class UndoStack {
 
     /**
      * Appends the given {@link UndoItem} at the end of this {@link UndoStack}.
+     *
      * @param ui is the {@link UndoItem} which will be added to this {@link UndoStack}
      */
     public void push(UndoItem ui) {
