@@ -16,7 +16,6 @@ As an example for the following graph:
 This method uses way less space than any solution with a matrix, and still has reasonably low runtime (the runtime is mostly
 dependent on the logic of the searchtree anyway).
 Also, we don't have to manage any indexes of a list if we use a set.
----
 
 By now it contains many parts that don't speed up calculation on small inputs noticably. On very big instances though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as were mostly optimizing for the worst case anyway, we are willing to take that drawback.
 
