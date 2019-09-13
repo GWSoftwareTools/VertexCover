@@ -106,6 +106,7 @@ If you can for example reduce the graph by remove the max-degree-vertex 5 times,
 
 
 ## Undo-Stack
-An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into
-the search tree. While this change was beneficial from what our tests say so far, the runtime reduction was only about 20%.
-The rules described above on the other hand changed it by a factor of at least 10 to put it into persepective.
+An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we don't have to make a copy of the graph every time we go one layer deeper into the search tree. This stack saves the inverse operations of what we do in the search tree and if we find out that this path in the search tree doesn't work, we can trace back to the fork and take the other path in the tree.
+
+While this change was beneficial from what our tests say so far, the runtime reduction was only about 20%.
+The rules described above on the other hand changed it by a factor of at least 10 each to put it into persepective.
