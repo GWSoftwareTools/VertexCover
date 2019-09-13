@@ -25,7 +25,7 @@ By now it contains many parts that don't speed up calculation on small inputs no
 
 The main changes that improved the runtime on all inputs were:
 * Creating the method removeClique, which removes cliques of any size n when less than n vertices are connected outside of the clique.
-* Applying as many rules before you try to solve for K, so you only have to do it once.
+* Applying as many rules before you try to solve for K, so you only have to do it once (doen't work for the high-degree rule, as it depends on the value K of an instance, but all other rules are applicable).
 * Using the datastructures Hashmap and Hashset.
 
 ---
