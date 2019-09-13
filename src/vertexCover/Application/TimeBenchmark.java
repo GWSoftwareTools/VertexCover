@@ -55,7 +55,7 @@ public class TimeBenchmark {
                 try {
                     f = es.submit(() -> PrettyText.printResult(g));
                     f.get(TIMEOUT, TimeUnit.SECONDS);
-                    successfulRuns += runs;
+                    successfulRuns++;
                 } catch (TimeoutException e) {
                     f.cancel(true);
                     System.setOut(old);
