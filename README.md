@@ -41,7 +41,7 @@ remove "key", and merge both neighbours together, which means deleting one of th
 deleted one onto the remaining one. This is done in the method "mergeVertices". It doesn't really affect the runtime
 in which direction the merge operation is done.
 Example:
-<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="400" alt="removeP3">
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="600" alt="removeP3">
 
 
 * ### removeBigNeighbour:
@@ -53,7 +53,7 @@ vertex cover to cover the edge between them. Because v2 also covers every edge v
 is in every case worth it to take it over v1. If v1 and v2 have the same set of neighbours, this rule can
 be applied in both direction with no difference.
 Example:
-<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="400" alt="removeBigNeighbour">
+<img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="800" alt="removeBigNeighbour">
 
 
 * ### removeHighDeg:
