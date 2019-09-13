@@ -21,7 +21,7 @@ Also, we don't have to manage any indexes of a list if we use a set.
 
 ---
 ## Overview 
-By now it contains many parts that don't speed up calculation on small inputs noticably. On very big instances though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as were mostly optimizing for the worst case anyway, we are willing to take that drawback.
+By now it contains many parts that don't speed up calculation on small inputs noticably. On very big instances though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 The main changes that improved the runtime on all inputs were:
 * Creating the method removeClique, which removes cliques of any size n when less than n vertices are connected outside of the clique.
