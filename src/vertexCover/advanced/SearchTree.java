@@ -92,8 +92,8 @@ public class SearchTree {
         }
 
         inst.graph.restore(safePoint);
-        inst.k = safeK - inst.graph.getNeighbors(bestKey).size();
-        inst.graph.getNeighbors(bestKey).forEach(inst.graph::deleteVertex);
+        inst.k = safeK - inst.graph.getNeighbours(bestKey).size();
+        inst.graph.getNeighbours(bestKey).forEach(inst.graph::deleteVertex);
         return solveI(inst); // instNeighborsDelete
     }
 
@@ -110,7 +110,7 @@ public class SearchTree {
         //Can NOT use "prepareInstance", because this would use "removeHighDeg" which isn`t allowed in this context
         boolean hasRemoved = true;
         while (hasRemoved) {
-            hasRemoved = removeCliques(inst) | removeP3(inst) | removeBigNeighbor(inst);
+            hasRemoved = removeCliques(inst) | removeP3(inst) | removeBigNeighbour(inst);
         }
         inst.k = -inst.k;
 
@@ -126,7 +126,7 @@ public class SearchTree {
     private static void applyRules(Instance inst) {
         boolean hasRemoved = true;
         while (hasRemoved) {
-            hasRemoved = removeP3(inst) | removeCliques(inst) | removeHighDeg(inst) | removeBigNeighbor(inst);
+            hasRemoved = removeP3(inst) | removeCliques(inst) | removeHighDeg(inst) | removeBigNeighbour(inst);
         }
     }
 
@@ -145,7 +145,7 @@ public class SearchTree {
         keyLoop:
         for (int key : inst.graph.getVertices()) {
 
-            Set<Integer> neighbours = inst.graph.getNeighbors(key);
+            Set<Integer> neighbours = inst.graph.getNeighbours(key);
 
             //check all connections of the neighbours pairwise to verify that it is a clique
             for (int a : neighbours) {
@@ -177,8 +177,8 @@ public class SearchTree {
     private static boolean removeP3(Instance inst) {
         boolean changed = false;
         for (int key : inst.graph.getVertices()) {
-            if (inst.graph.getNeighbors(key).size() == 2) {
-                Iterator<Integer> it = inst.graph.getNeighbors(key).iterator();
+            if (inst.graph.getNeighbours(key).size() == 2) {
+                Iterator<Integer> it = inst.graph.getNeighbours(key).iterator();
                 //Merge nb1 onto nb2
                 int nb1 = it.next();
                 int nb2 = it.next();
@@ -204,15 +204,15 @@ public class SearchTree {
      * @param inst Target instance.
      * @return True if this method changed the instance. False otherwise.
      */
-    private static boolean removeBigNeighbor(Instance inst) {
+    private static boolean removeBigNeighbour(Instance inst) {
         boolean changed = false;
         for (int a : inst.graph.getVertices()) {
-            neighborLoop:
-            for (int b : inst.graph.getNeighbors(a)) {
+            neighbourLoop:
+            for (int b : inst.graph.getNeighbours(a)) {
 
-                for (int i : inst.graph.getNeighbors(a)) {
-                    if (!(inst.graph.getNeighbors(b).contains(i) || i == b)) {
-                        continue neighborLoop;
+                for (int i : inst.graph.getNeighbours(a)) {
+                    if (!(inst.graph.getNeighbours(b).contains(i) || i == b)) {
+                        continue neighbourLoop;
                     }
                 }
 
@@ -232,12 +232,12 @@ public class SearchTree {
         HashSet<HashSet<Integer>> rectangles = new HashSet<>();
 
         for (int key : inst.graph.getVertices()) {
-            Set<Integer> neighbours = inst.graph.getNeighbors(key);
+            Set<Integer> neighbours = inst.graph.getNeighbours(key);
             for (int a : neighbours) {
                 for (int b : neighbours) {
                     if (a != b) {
-                        Set<Integer> fourthVertexSet = inst.graph.getNeighbors(a);
-                        fourthVertexSet.retainAll(inst.graph.getNeighbors(b));
+                        Set<Integer> fourthVertexSet = inst.graph.getNeighbours(a);
+                        fourthVertexSet.retainAll(inst.graph.getNeighbours(b));
                         fourthVertexSet.remove(key);
 
                         for (int fourthVertex : fourthVertexSet) {
@@ -276,7 +276,7 @@ public class SearchTree {
      * @param to   This vertex receives the edges from "from".
      */
     private static void mergeVertices(Graph g, int from, int to) {
-        g.getNeighbors(from).forEach(x -> g.addEdge(to, x));
+        g.getNeighbours(from).forEach(x -> g.addEdge(to, x));
         g.deleteVertex(from);  //also deletes all edges containing
     }
 }

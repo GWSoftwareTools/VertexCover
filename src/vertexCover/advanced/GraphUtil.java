@@ -43,8 +43,8 @@ public class GraphUtil {
      */
     private static int[] anyPair(Graph g) {
         for (int key : g.getVertices()) {
-            if (g.getNeighbors(key).size() > 0) {
-                Iterator<Integer> it = g.getNeighbors(key).iterator();
+            if (g.getNeighbours(key).size() > 0) {
+                Iterator<Integer> it = g.getNeighbours(key).iterator();
                 return new int[]{key, it.next()};
             }
         }

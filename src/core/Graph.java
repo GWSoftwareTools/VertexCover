@@ -150,7 +150,7 @@ public class Graph {
         return contains(v) && edges.get(v).contains(w);
     }
 
-    public Set<Integer> getNeighbors(Integer v) {
+    public Set<Integer> getNeighbours(Integer v) {
         if (edges.containsKey(v)) {
             return new HashSet<>(edges.get(v));
         }
@@ -227,7 +227,7 @@ public class Graph {
      */
     public Graph getConnectedGraph(int startPos) {
         Graph connGraph = new Graph();
-        connectedVertices(startPos).forEach(x -> connGraph.edges.put(x, new HashSet<>(getNeighbors(x))));
+        connectedVertices(startPos).forEach(x -> connGraph.edges.put(x, new HashSet<>(getNeighbours(x))));
         return connGraph;
     }
 
@@ -248,7 +248,7 @@ public class Graph {
 
         while (current.size() > 0) {
             int cur = current.iterator().next();
-            for (int nb : getNeighbors(cur)) {
+            for (int nb : getNeighbours(cur)) {
                 if (!visited.contains(nb))
                     current.add(nb);
             }

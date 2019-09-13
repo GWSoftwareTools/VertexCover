@@ -69,7 +69,7 @@ class GraphTest {
 
     @Test
     void getNeighbors() {
-        Set<Integer> nb = g.getNeighbors(1);
+        Set<Integer> nb = g.getNeighbours(1);
         assertTrue(nb.contains(2));
         assertTrue(nb.contains(3));
         assertFalse(nb.contains(0));
