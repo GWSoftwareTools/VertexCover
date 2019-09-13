@@ -7,7 +7,7 @@ Calculates the minimum number of vertices you need to cover every edges at least
 ## Datastructure
 For representing the graph we decided to use a Hashmap that maps from integer to a set of integers. This means: The key is the ID of a vertex and the value (the set) are all of the neighbours. 
 As an example for the following graph:
-![alt text](https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/Master/graph.png "Simple Graph")
+![alt text](https://githubusercontent.com/GWSoftwareTools/VertexCover/raw/Master/graph.png "Simple Graph")
 * 1 -> {2,3}
 * 2 -> {1,3}
 * 3 -> {1,2,4}
