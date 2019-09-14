@@ -35,7 +35,7 @@ As an example here is the map for the following graph:
 * This method uses **less space** than any solution with a matrix (unless the graph contains near the maximum amount of edges).
 * It also has reasonably **low runtime** (the runtime is mostly dependent on the logic of the searchtree anyway).
 * Also, we do **less erros**, because we don't have to manage any indexes of a list if we use a set.
-* **One field** is sufficient for all operations we want to perform.
+* **One class-field** is sufficient for all operations we want to perform.
 
 ---
 
