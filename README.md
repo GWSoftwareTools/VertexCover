@@ -9,18 +9,20 @@ Calculates the minimum number of vertices you need to cover every edge with at l
 ## Overview 
 We split the project into two packages *core* and *vertex cover*. We split the classes based on wether they have functionality for graphs themselves or for the vertex cover problem.
 
-By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. 
+By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. \
+For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
 And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 ### The main changes that improved the runtime on all inputs were:
-* Creating the method removeClique, which removes [cliques](https://en.wikipedia.org/wiki/Clique_(graph_theory)) of **any** size `n` when less than `n` vertices are connected outside of the clique.
-* Applying as many rules as you can on the graph before you try to solve for `k`, so you only have to apply them once (doesn't work for the high-degree rule though, as it depends on the value `k` of an instance). But all other rules are applicable, you just have to track the change, we chose to use an instance for that.
-* Using the datastructures Hashmap and Hashset.
+* Creating the method *removeClique*, which removes [cliques](https://en.wikipedia.org/wiki/Clique_(graph_theory)) of **any** size `n` when less than `n` vertices are connected outside of the clique.
+* Applying as many rules as you can on the graph **before** you try to solve for `k`, so you only have to apply them once (doesn't work for the high-degree rule though, as it depends on the value `k` of an instance). But all other rules are applicable, you just have to track the change, we chose to use an instance for that.
+* Using the datastructures *Hashmap* and *Hashset*.
 
 ---
 
 ## Datastructure
-For representing the graph we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. This means: The *key* is the ID of a vertex and the *value* (the set) are all of its neighbours. 
+For representing the graph, we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. \
+This means: The *key* is the ID of a vertex and the *value* (the set) are all of its neighbours. 
 As an example here is the map for the following graph:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/graph.png" width="40%" alt="simple graph">
 * 1 → {2,3}
@@ -30,7 +32,7 @@ As an example here is the map for the following graph:
 
 ---
 
-* This method uses way **less space** than any solution with a matrix (unless the graph contains near the maximum amount of edges, which doesn't tend to happen on big graphs where it starts to matter).
+* This method uses **less space** than any solution with a matrix (unless the graph contains near the maximum amount of edges).
 * It also has reasonably **low runtime** (the runtime is mostly dependent on the logic of the searchtree anyway).
 * Also, we do **less erros**, because we don't have to manage any indexes of a list if we use a set.
 
@@ -38,16 +40,25 @@ As an example here is the map for the following graph:
 
 ## Reduction Rules
 
-The reduction rules are all applied exhaustively, meaning the are repeated as often as possible until they don't change anything anymore. For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. We always have to apply all rules, because one rule may create an opportunity for another rule to be used. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
+The reduction rules are all applied exhaustively, meaning they are repeated as long as they change the graph. \
+For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops. \
 
+We always have to apply all rules, because one rule may create an opportunity for another rule to be used. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
+
+---
 
 * ### removeCliques: 
 
-A **clique** is a set of vertices which are ALL connected to each other vertex in the clique. For example a single point,
-two connected vertices or a triangle are (simple) cases of a clique. If we find a clique of **size n and only `n-1` vertices
-are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.
-This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques.  
+A **[clique](https://en.wikipedia.org/wiki/Clique_(graph_theory))** is a set of vertices which are ALL interconnected. \
+For example a single point, two connected vertices or a triangle are examples of a clique. 
+\\
+If we find a clique of **size n and only `n-1` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.
+This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques. 
+
+---
+
 Example:  
+
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
 The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).
 
