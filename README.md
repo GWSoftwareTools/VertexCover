@@ -60,33 +60,33 @@ This is a generalization of the "singleton" and "degree-one" rule ⇒ It also wo
 Example:  
 
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeCliques.png" width="50%" alt="removeCliques">  
-The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).
+
+*The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).*
 
 
 * ### removeP3: (called *P3* because it's a path of length 3, don't judge)
 
-If a vertex `key` is ONLY connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can
-remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
-deleted one onto the remaining one. This is done in the method *mergeVertices*. It doesn't really affect the runtime
-in which direction the merge operation is done.  
+If a vertex `key` is **only** connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
+deleted one onto the remaining one. \
+This is done in the method *mergeVertices*. The direction of the merge doesn't really affect the runtime from our experience.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">  
-The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) was deleted and their neighbours merged.
+*The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) was deleted and their neighbours merged.*
 
 
 * ### removeBigNeighbour:
 
-If there exist two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
-`v2`, we can remove `v2` and reduce `k` by `1`.
+If there are two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
+`v2`, we can remove `v2` and reduce `k` by 1.
 You can visualize this rule this way: As `v1` and `v2` are connected, at least one of the has to be included in the
-vertex cover to cover the edge between them. If both `v1` and `v2` are deleted, there is no difference. If not, some of the neighbors have to be deleted. 
-In this cases there need to be less deletions because we are only handling the subset, not the bigger one.
+vertex cover because of the edge between them. If both `v1` and `v2` are deleted, this rule doesn't make adifference. If not, some of the neighbors have to be included in the vertex cover. 
+In this case there need to be less deletions because we are only handling the subset, not the bigger one.
 
 If `v1` and `v2` have the same set of neighbours, this rule can
 be applied in both direction with no difference.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
-Because vertex `2` has all the neighbours vertex `1` has and even some more, vertex `2` was deleted.  
+*Because vertex `2` has all the neighbours vertex `1` has and even some more, vertex `2` was deleted.*
 
 
 * ### removeHighDeg:
@@ -96,19 +96,18 @@ An implementation of the high-degree rule which removes vertices with more neigh
 ---
 
 ## Heuristics
-We try to "guess" what K will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound `u`.
+We try to "guess" what `k` will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound `u`.
 Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to check `K` for the range between these values.
 
 ---
 
 For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
-try it by removing an arbitrary edge `e` for as long as edges exist. Because everytime we also remove the adjacent vertices `a`, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
+tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
 
 Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains. 
 Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
-We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore
-additionally reduce the error we have in our heuristic.
+We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
 
 Most importantly, we can use this lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any time, we know that this instance can't be solved and we can go back up the search tree immediatly.
 
@@ -118,6 +117,10 @@ The upper-bound method always returns a valid solution for the vertex cover prob
 be optimal, but in many cases, it is surprisingly close.
 It works by always removing the vertex with the highest degree and adding 1 to the counter.
 If you can for example reduce all edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
+
+We can use this to stop our search for `k` one run earlier. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the optimal one, because no lower one is valid.
+This fix may appear small, but because the validity-check of an instance for a number `n`takes 2 times as many calculations as for `n-1`, testing for a number `n` takes about as long as testing for `0` to `n-1`, because it's a geometric series.
+Accordingly, this fix halfes the runtime on average.
 
 ---
 
