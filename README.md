@@ -142,4 +142,5 @@ Some rules on the other hand changed it by a factor of at least 10 each to put i
 ---
 
 ## Tests
-We have tests both for the class [Graph](./tests/vertexCover/main/GraphTest.java "Graph") and for [SearchTree](./tests/vertexCover/main/SearchTreeTest.java "SearchTree").
+We have tests both for the class [Graph](./tests/vertexCover/main/GraphTest.java "Graph") and for [SearchTree](./tests/vertexCover/main/SearchTreeTest.java "SearchTree"). \
+Additionally we started to test our heuristics by calculating by what fraction they were off the actual result.
