@@ -31,7 +31,7 @@ public class Graph {
                 continue;
             }
             i = new Scanner(line);
-            addEdge(i.nextInt(), i.nextInt());
+            addEdge(i.nextInt(), i.nextInt(), false);
             i.close();
         }
         br.close();
@@ -43,13 +43,13 @@ public class Graph {
      * @param v ID of the new added vertex
      */
     public void addVertex(Integer v) {
-        addVertex(v, false);
+        addVertex(v, true);
     }
 
-    private void addVertex(Integer v, boolean restore) {
+    private void addVertex(Integer v, boolean addToStack) {
         if (!contains(v)) {
             edges.put(v, new HashSet<>());
-            if (!restore) {
+            if (addToStack) {
                 undoStack.push(new UndoStack.UndoItem() {
                     @Override
                     public void undo() {
@@ -71,7 +71,7 @@ public class Graph {
                 undoStack.push(new UndoStack.UndoItem() {
                     @Override
                     public void undo() {
-                        addEdge(v, nb, true);
+                        addEdge(v, nb, false);
                     }
                 });
                 edges.get(nb).remove(v);
@@ -88,18 +88,18 @@ public class Graph {
      * @param w Second ID of incident vertex
      */
     public void addEdge(Integer v, Integer w) {
-        addEdge(v, w, false);
+        addEdge(v, w, true);
     }
 
-    private void addEdge(Integer v, Integer w, boolean restore) {
+    private void addEdge(Integer v, Integer w, boolean addToStack) {
         if (!v.equals(w)) {
-            addVertex(v, restore);
-            addVertex(w, restore);
-            if ((edges.get(v).add(w) | edges.get(w).add(v)) && !restore) {
+            addVertex(v, addToStack);
+            addVertex(w, addToStack);
+            if ((edges.get(v).add(w) | edges.get(w).add(v)) && addToStack) {
                 undoStack.push(new UndoStack.UndoItem() {
                     @Override
                     public void undo() {
-                        deleteEdge(v, w, true);
+                        deleteEdge(v, w, false);
                     }
                 });
             }
@@ -112,16 +112,16 @@ public class Graph {
      * DELETES a vertex if he has 0 edges after this function call
      */
     public void deleteEdge(Integer v, Integer w) {
-        deleteEdge(v, w, false);
+        deleteEdge(v, w, true);
     }
 
-    private void deleteEdge(Integer v, Integer w, boolean restore) {
+    private void deleteEdge(Integer v, Integer w, boolean addToStack) {
         if (contains(v) && contains(w)) {
-            if ((edges.get(v).remove(w) | edges.get(w).remove(v)) && !restore) {
+            if ((edges.get(v).remove(w) | edges.get(w).remove(v)) && addToStack) {
                 undoStack.push(new UndoStack.UndoItem() {
                     @Override
                     public void undo() {
-                        addEdge(v, w, true);
+                        addEdge(v, w, false);
                     }
                 });
             }
@@ -218,7 +218,7 @@ public class Graph {
             return true;
         }
         int startPos = getVertices().iterator().next();
-        return connectedVertices(startPos).size() == getVertices().size();
+        return connectedVertices(startPos).size() == size();
     }
 
     /**

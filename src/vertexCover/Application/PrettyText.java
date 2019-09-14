@@ -17,12 +17,14 @@ class PrettyText {
      *
      * @param g The target graph.
      */
-    static void printResult(Graph g) {
-        printAnalysis(g);
+    static void printResult(Graph g, boolean print) {
+        if (print)
+            printAnalysis(g);
         int safePoint = g.getSafePoint();
         int result = SearchTree.minVertexCover(g);
         g.restore(safePoint);
-        System.out.println("\n" + String.format(formatter, "Result:") + result);
+        if (print)
+            System.out.println("\n" + String.format(formatter, "Result:") + result);
     }
 
     /**
