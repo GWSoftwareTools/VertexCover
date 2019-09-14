@@ -142,4 +142,4 @@ Some rules on the other hand changed it by a factor of at least 10 each to put i
 ---
 
 ## Tests
-We have tests both for the class [Graph](./src/vertexCover/advanced/Graph.java "Graph") and for [SearchTree](./src/vertexCover/advanced/SearchTree.java "SearchTree").
+We have tests both for the class [Graph](./tests/vertexCover/main/GraphTest.java "Graph") and for [SearchTree](./tests/vertexCover/main/SearchTreeTest.java "SearchTree").
