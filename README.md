@@ -9,8 +9,8 @@ Calculates the minimum number of vertices you need to cover every edge with at l
 ## Overview 
 We use two packages *core* and *vertex cover*. We split the classes based on wether they have functionality for graphs themselves or for the vertex cover problem.
 
-By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. \
-For example the split into [disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint) subGraphs actually slows the program down in most cases. But if you hit one [very big graph](http://networkrepository.com/bn-human-BNU-1-0025864-session-1-bg.php) that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
+By now it contains many parts that don't speed up calculation on small inputs noticably. On [**very big instances**](http://networkrepository.com/bn-human-BNU-1-0025864-session-1-bg.php) though, they are worth it. \
+For example the split into [disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint) subGraphs actually slows the program down in most cases. But if you hit one big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
 And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 ### The main changes that improved the runtime on all inputs were:
