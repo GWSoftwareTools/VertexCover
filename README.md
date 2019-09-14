@@ -111,7 +111,7 @@ Now only `o` is left without edges. We know this is not correct, we cant have a 
 
 We remove all triangles exhaustively by applying our [reduction rules](#reduction-rules). Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
 
-Most importantly, we can use this lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any time, we know that this instance can't be solved and we can go back up the search tree immediatly.
+Most importantly, we can use the lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any point in time, we know that the instance can't be solved and we can go back up the search tree immediatly.
 
 ---
 
@@ -131,7 +131,7 @@ Accordingly, this halfes the runtime on average if the upper-bound is optimal.
 
 ## Undo-Stack
 An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we **don't have to make a copy** of the graph every time we go one layer deeper into the search tree. \
-This stack saves the inverse operations of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
+This stack [saves the inverse operations](https://stackoverflow.com/questions/3541383/undo-redo-implementation) of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
 
 ---
 While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.\
