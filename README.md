@@ -132,8 +132,9 @@ Accordingly, this halfes the runtime on average if the upper-bound is optimal.
 
 ## Undo-Stack
 An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we **don't have to make a copy** of the graph every time we go one layer deeper into the search tree. \
-This stack [saves the inverse operations](https://stackoverflow.com/questions/3541383/undo-redo-implementation) of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
+This stack [saves the inverse operations](https://stackoverflow.com/questions/3541383/undo-redo-implementation) and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork in the tree and take the other path.
 
 ---
+
 While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.\
 Some rules on the other hand changed it by a factor of at least 10 each to put it into persepective.
