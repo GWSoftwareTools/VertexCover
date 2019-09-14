@@ -31,6 +31,7 @@ public class TimeBenchmark {
         for (File file : dir.listFiles()) {
             System.out.println("### " + file.getName() + ":");
             Graph g = new Graph(file);
+            PrettyText.printAnalysis(g);
             startTime = System.nanoTime();
 
             for (int i = 1; i <= runs; i++) {

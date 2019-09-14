@@ -18,8 +18,6 @@ class PrettyText {
      * @param g The target graph.
      */
     static void printResult(Graph g, boolean print) {
-        if (print)
-            printAnalysis(g);
         int safePoint = g.getSafePoint();
         int result = SearchTree.minVertexCover(g);
         g.restore(safePoint);
@@ -32,7 +30,7 @@ class PrettyText {
      *
      * @param g The analyzed graph.
      */
-    private static void printAnalysis(Graph g) {
+    static void printAnalysis(Graph g) {
         System.out.println(
                 String.format(formatter, "Vertices:") + g.getVertices().size() + "\n" +
                         String.format(formatter, "Edges:") + g.getEdgeCount() + "\n" +
