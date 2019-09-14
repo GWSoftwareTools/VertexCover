@@ -52,7 +52,7 @@ We always have to apply all rules, because one rule may create an opportunity fo
 A **[clique](https://en.wikipedia.org/wiki/Clique_(graph_theory))** is a set of vertices which are ALL interconnected. \
 For example a single point, two connected vertices or a triangle are examples of a clique. 
 \\
-If we find a clique of **size n and only `n-1` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.
+If we find a clique of **size n and only `n-1` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.\
 This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques. 
 
 ---
@@ -67,7 +67,7 @@ Example:
 * ### removeP3: (called *P3* because it's a path of length 3)
 
 If a vertex `key` is **only** connected to two neighbours `nb1` and `nb2`, who are themselves **not neighbours of each other**, we can remove `key`, and merge both neighbours together, which means deleting one of them and moving the connections of the
-deleted one onto the remaining one. \
+deleted one onto the remaining one.\
 This is done in the method *mergeVertices*. The direction of the merge doesn't really affect the runtime from our experience.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">  
@@ -77,13 +77,12 @@ Example:
 * ### removeBigNeighbour:
 
 If there are two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
-`v2`, we can remove `v2` and reduce `k` by 1.
+`v2`, we can remove `v2` and reduce `k` by 1.\
 You can visualize this rule this way: As `v1` and `v2` are connected, at least one of the has to be included in the
-vertex cover because of the edge between them. If both `v1` and `v2` are deleted, this rule doesn't make adifference. If not, some of the neighbors have to be included in the vertex cover. 
+vertex cover because of the edge between them. If both `v1` and `v2` are deleted, this rule doesn't make adifference. If not, some of the neighbors have to be included in the vertex cover.\
 In this case there need to be less deletions because we are only handling the subset, not the bigger one.
 
-If `v1` and `v2` have the same set of neighbours, this rule can
-be applied in both direction with no difference.  
+If `v1` and `v2` have the same set of neighbours, this rule can be applied in both direction with no difference.  
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
 *Because vertex `2` has all the neighbours vertex `1` has and even some more, vertex `2` was deleted.*
@@ -103,9 +102,10 @@ Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to chec
 
 * ### Lower-Bound:
 For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
-tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
+tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`.\
+While this method already works, it is not perfect.
 
-Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains. 
+Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains.\
 Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
 We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
@@ -116,12 +116,13 @@ Most importantly, we can use this lower-bound to check if we need stop following
 
 * ### Upper-Bound:
 The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
-be optimal, but in many cases, it is surprisingly close.
-It works by always removing the vertex with the highest degree and adding 1 to the counter.
+be optimal, but in many cases, it is surprisingly close. \
+
+It works by always removing the vertex with the highest degree and adding 1 to the counter.\
 If you can for example reduce all edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
 
-We can use this to stop our search for `k` one run earlier. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the optimal one, because no lower one is valid.
-This fix may appear small, but because the validity-check of an instance for a number `n`takes 2 times as many calculations as for `n-1`, testing for a number `n` takes about as long as testing for `0` to `n-1`, because it's a geometric series.
+We can use this to stop our search for `k` one run earlier. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the optimal one, because no lower one is valid.\
+This fix may appear small, but because the validity-check of an instance for a number `n`takes 2 times as many calculations as for `n-1`, testing for a number `n` takes about as long as testing for `0` to `n-1`, because it's a geometric series.\
 Accordingly, this fix halfes the runtime on average.
 
 ---
