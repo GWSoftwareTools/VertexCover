@@ -52,7 +52,7 @@ We always have to apply all rules, because one rule may create an opportunity fo
 
 A **[clique](https://en.wikipedia.org/wiki/Clique_(graph_theory))** is a set of vertices which are **all** interconnected. \
 For example: a single point, two connected vertices or a triangle are examples of a clique. \
-If we find a clique of **size `n` and less than `n` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.\
+If we find a clique of **size `n` and less than `n` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce `k` by `n-1`.\
 This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques.
 
 Example:  
