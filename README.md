@@ -98,19 +98,19 @@ An implementation of the high-degree rule which removes vertices with more neigh
 
 ## Heuristics
 We try to "guess" what `k` will be in two different methods in the class [GraphUtil](./src/vertexCover/advanced/GraphUtil.java "lower-bound"). They are called lower-bound `l` and upper-bound `u`.
-Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to check `K` for the range between these values.
+Because the result `r` for the vertex cover satisfies `l` <= `r` <= `u`, we can restrict our search.
 
 ---
 
 * ### Lower-Bound:
-For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
-tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`.\
+The methods goal is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
+tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e` and their adjacent edges, we make sure no other edges exist that could touch `e`.\
 While this method already works, it is not perfect:
 
-Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains.\
-Now only `o` is left without edges. We know this is not correct, we can't have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
+Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, only one vertex `o` on the opposite site remains. \
+Now only `o` is left without edges. We know this is not correct, we can't have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound.
 
-We remove all triangles exhaustively by applying our [reduction rules](#reduction-rules). Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
+We remove all triangles exhaustively by applying our [reduction rules](#reduction-rules). Additionally, these rules are 100% correct and reduce the error we have in our heuristic.
 
 Most importantly, we can use the lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any point in time, we know that the instance can't be solved and we can go back up the search tree immediatly.
 
@@ -123,9 +123,9 @@ be optimal, but in many cases, it is surprisingly close.
 It works by removing the vertex with the highest degree and adding 1 to the counter.\
 If you can for example reduce all of edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
 
-We can use this to stop our search for `k` one run earlier than in a naive implementation. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the optimal one, because no lower one is valid.\
-This fix may appear small, but because the validity-check of an instance for a number `n` takes 2 times as many calculations as for `n-1`, testing for a number `n` takes about as long as testing for `0` to `n-1`.\
-This is because the runtime for an instance based on `k` is 2<sup>k</sup>, because the search tree of the recursion splits into 2 paths for each call. Adding up these runtimes then can be described as a [geometric series](https://en.wikipedia.org/wiki/Geometric_series).\
+We can use this to stop our search for `k` one run earlier than in a naive implementation. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the result. \
+This fix may appear small, but because the runtime for an instance based on `k` is 2<sup>k</sup>, testing for a number `n` takes about as long as testing for `0` to `n-1`.\
+This can be seen when adding up the runtimes as a [geometric series](https://en.wikipedia.org/wiki/Geometric_series).\
 Accordingly, this halfes the runtime on average if the upper-bound is optimal.
 
 ---
