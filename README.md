@@ -40,7 +40,7 @@ As an example here is the map for the following graph:
 
 ## Reduction Rules
 
-The reduction rules are all applied exhaustively, meaning they are repeated as long as they change the graph. \
+The [reduction rules](https://github.com/GWSoftwareTools/VertexCover/blob/master/README.md#datastructure) are all applied exhaustively, meaning they are repeated as long as they change the graph. \
 For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops.
 
 We always have to apply all rules, because one rule may create an opportunity for another rule to be used. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
