@@ -101,6 +101,7 @@ Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to chec
 
 ---
 
+* ### Lower-Bound:
 For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
 tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`. While this method already works, it is not perfect.
 
@@ -113,6 +114,7 @@ Most importantly, we can use this lower-bound to check if we need stop following
 
 ---
 
+* ### Upper-Bound:
 The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
 be optimal, but in many cases, it is surprisingly close.
 It works by always removing the vertex with the highest degree and adding 1 to the counter.
