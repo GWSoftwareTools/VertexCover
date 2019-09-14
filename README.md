@@ -78,7 +78,7 @@ Example:
 
 If there are two adjacent vertices `v1` and `v2` and the set of neighbours of `v1` is a **subset** of the neighbours of
 `v2`, we can remove `v2` and reduce `k` by 1.\
-You can visualize this rule this way: As `v1` and `v2` are connected, at least one of the has to be included in the
+You can visualize this rule this way: As `v1` and `v2` are connected, at least one of them has to be included in the
 vertex cover because of the edge between them. If both `v1` and `v2` are deleted, this rule doesn't make adifference. If not, some of the neighbors have to be included in the vertex cover.\
 In this case there need to be less deletions because we are only handling the subset, not the bigger one.
 
