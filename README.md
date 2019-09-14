@@ -7,7 +7,7 @@ Calculates the minimum number of vertices you need to cover every edge with at l
 ---
 
 ## Overview 
-We split the project into two packages *core* and *vertex cover*. We split the classes based on wether they have functionality for graphs themselves or for the vertex cover problem.
+We use two packages *core* and *vertex cover*. We split the classes based on wether they have functionality for graphs themselves or for the vertex cover problem.
 
 By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. \
 For example the split into [disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint) subGraphs actually slows the program down in most cases. But if you hit one [very big graph](http://networkrepository.com/bn-human-BNU-1-0025864-session-1-bg.php) that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
@@ -35,13 +35,14 @@ As an example here is the map for the following graph:
 * This method uses **less space** than any solution with a matrix (unless the graph contains near the maximum amount of edges).
 * It also has reasonably **low runtime** (the runtime is mostly dependent on the logic of the searchtree anyway).
 * Also, we do **less erros**, because we don't have to manage any indexes of a list if we use a set.
+* **One field** is sufficient for all operations we want to perform.
 
 ---
 
 ## Reduction Rules
 
-The [reduction rules](https://github.com/GWSoftwareTools/VertexCover/blob/master/README.md#datastructure) are all applied exhaustively, meaning they are repeated as long as they change the graph. \
-For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules all are applied until one run occurs where nothing has happened, then it stops.
+The reduction rules are all applied exhaustively, meaning they are repeated as long as they change the graph. \
+For this reason their implementations all return a boolean which indicates wether a change has been made to the graph/instance. The rules  are applied until every method returns *false*, then we break.
 
 We always have to apply all rules, because one rule may create an opportunity for another rule to be used. As we can't really anticipate these side-effects (yet?), we always have to apply all of them.
 
@@ -49,13 +50,10 @@ We always have to apply all rules, because one rule may create an opportunity fo
 
 * ### removeCliques: 
 
-A **[clique](https://en.wikipedia.org/wiki/Clique_(graph_theory))** is a set of vertices which are ALL interconnected. \
-For example a single point, two connected vertices or a triangle are examples of a clique. 
-\
+A **[clique](https://en.wikipedia.org/wiki/Clique_(graph_theory))** is a set of vertices which are **all** interconnected. \
+For example: a single point, two connected vertices or a triangle are examples of a clique. \
 If we find a clique of **size n and only `n-1` vertices are connected to a vertex outside of the clique**, we can remove the clique and reduce the parent instance by `n-1`.\
-This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques. 
-
----
+This is a generalization of the "singleton" and "degree-one" rule ⇒ It also works on arbitrarily big cliques.
 
 Example:  
 
@@ -63,6 +61,7 @@ Example:
 
 *The vertices `1`, `2` and `3` have edges between each other and only `2` and `3` have even more neighbours. All vertices in this triangle where deleted and `k` decreased by 2 (number of neighbours of `1`).*
 
+---
 
 * ### removeP3: (called *P3* because it's a path of length 3)
 
@@ -73,6 +72,7 @@ Example:
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeP3.png" width="70%" alt="removeP3">  
 *The vertices `2` and `3` aren't neighbours so one of them (in this example `3`) was deleted and their neighbours merged.*
 
+---
 
 * ### removeBigNeighbour:
 
@@ -82,11 +82,12 @@ You can visualize this rule this way: As `v1` and `v2` are connected, at least o
 vertex cover because of the edge between them. If both `v1` and `v2` are deleted, this rule doesn't make adifference. If not, some of the neighbors have to be included in the vertex cover.\
 In this case there need to be less deletions because we are only handling the subset, not the bigger one.
 
-If `v1` and `v2` have the same set of neighbours, this rule can be applied in both direction with no difference.  
+If `v1` and `v2` have the same set of neighbours, this rule can be applied in both direction with no difference.\
 Example:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/removeBigNeighbour.png" width="100%" alt="removeBigNeighbour">  
 *Because vertex `2` has all the neighbours vertex `1` has and even some more, vertex `2` was deleted.*
 
+---
 
 * ### removeHighDeg:
 
@@ -103,12 +104,12 @@ Their meaning is that `k` >= `l` and `k` <= `u`. Therefore, we only need to chec
 * ### Lower-Bound:
 For the lower-bound, the method is to find as many non-touching edges as possible. While this is a hard problem to solve precisely, we
 tackle it by removing an arbitrary edge `e` for as long as the edge-set is not empty. Because everytime we also remove the adjacent vertices `a` of `e`, we make sure no other edges exist that could touch `e`.\
-While this method already works, it is not perfect.
+While this method already works, it is not perfect:
 
 Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains.\
 Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
-We remove all triangles exhaustively by applying our standart simplification rules. Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
+We remove all triangles exhaustively by applying our [reduction rules](#reduction-rules). Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
 
 Most importantly, we can use this lower-bound to check if we need stop following a path in the search tree. If `k` < `l` is true at any time, we know that this instance can't be solved and we can go back up the search tree immediatly.
 
