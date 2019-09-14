@@ -10,7 +10,7 @@ Calculates the minimum number of vertices you need to cover every edge with at l
 We split the project into two packages *core* and *vertex cover*. We split the classes based on wether they have functionality for graphs themselves or for the vertex cover problem.
 
 By now it contains many parts that don't speed up calculation on small inputs noticably. On very **big instances** though, they are worth it. \
-For example the split into disjoint subGraphs actually slows the program down in most cases. But if you hit one very big graph that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
+For example the split into [disjoint](https://en.wikipedia.org/wiki/Glossary_of_graph_theory_terms#disjoint) subGraphs actually slows the program down in most cases. But if you hit one [very big graph](http://networkrepository.com/bn-human-BNU-1-0025864-session-1-bg.php) that can be split into disjoint subGraphs, the speedup may be 50-fold or more. \
 And as we're mostly optimizing for the worst case anyway, we're willing to take that drawback.
 
 ### The main changes that improved the runtime on all inputs were:
@@ -22,7 +22,7 @@ And as we're mostly optimizing for the worst case anyway, we're willing to take 
 
 ## Datastructure
 For representing the graph, we decided to use a **[HashMap](https://docs.oracle.com/javase/10/docs/api/java/util/HashMap.html "JavaDoc")** that maps from integer to a **[HashSet](https://docs.oracle.com/javase/10/docs/api/java/util/HashSet.html "JavaDoc")** of integers. \
-This means: The *key* is the ID of a vertex and the *value* (the set) are all of its neighbours. 
+This means: The *key* is the ID of a vertex and the *value* (the set) are its neighbours. 
 As an example here is the map for the following graph:  
 <img src="https://raw.githubusercontent.com/GWSoftwareTools/VertexCover/master/pictures/graph.png" width="40%" alt="simple graph">
 * 1 → {2,3}
@@ -123,7 +123,7 @@ If you can for example reduce all edges the graph by removing the current max-de
 
 We can use this to stop our search for `k` one run earlier. If we know that `u-1` is not valid solution for `k`, and we also know that `u` **is** a valid solution, we can conlcude `u` must be the optimal one, because no lower one is valid.\
 This fix may appear small, but because the validity-check of an instance for a number `n`takes 2 times as many calculations as for `n-1`, testing for a number `n` takes about as long as testing for `0` to `n-1`, because it's a geometric series.\
-Accordingly, this fix halfes the runtime on average.
+Accordingly, this halfes the runtime on average if the upper-bound is optimal.
 
 ---
 
