@@ -107,7 +107,7 @@ tackle it by removing an arbitrary edge `e` for as long as the edge-set is not e
 While this method already works, it is not perfect:
 
 Imagine a triangle where you remove an edge `e`. As you also remove its adjacent vertices `a`, and only one vertex `o`, the one on the opposite site, remains.\
-Now only `o` is left without edges. We know this is not correct, we cant have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
+Now only `o` is left without edges. We know this is not correct, we can't have a vertex cover of a triangle with `k` = 1. Therefore, we must treat triangles differently, which we do at the start of the method lower-bound:
 
 We remove all triangles exhaustively by applying our [reduction rules](#reduction-rules). Additionally, these rules are 100% correct and therefore additionally reduce the error we have in our heuristic.
 
