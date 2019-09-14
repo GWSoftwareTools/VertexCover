@@ -138,3 +138,8 @@ This stack [saves the inverse operations](https://stackoverflow.com/questions/35
 
 While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.\
 Some rules on the other hand changed it by a factor of at least 10 each to put it into persepective.
+
+---
+
+## Tests
+We have tests both for the class [Graph](./src/vertexCover/advanced/Graph.java "Graph") and for [SearchTree](./src/vertexCover/advanced/SearchTree.java "SearchTree").
