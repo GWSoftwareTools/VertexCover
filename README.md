@@ -116,7 +116,7 @@ Most importantly, we can use this lower-bound to check if we need stop following
 
 * ### Upper-Bound:
 The upper-bound method always returns a valid solution for the vertex cover problem. It may or may not
-be optimal, but in many cases, it is surprisingly close. \
+be optimal, but in many cases, it is surprisingly close.
 
 It works by always removing the vertex with the highest degree and adding 1 to the counter.\
 If you can for example reduce all edges the graph by removing the current max-degree-vertex 5 times, the value 5 is an upper-bound. 
@@ -129,8 +129,9 @@ Accordingly, this fix halfes the runtime on average.
 
 
 ## Undo-Stack
-An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we **don't have to make a copy** of the graph every time we go one layer deeper into the search tree. This stack saves the inverse operations of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
+An [UndoStack](./src/vertexCover/advanced/UndoStack.java "UndoStack") was also created, so that we **don't have to make a copy** of the graph every time we go one layer deeper into the search tree. \
+This stack saves the inverse operations of what we do in the search tree and if we find out that the path in the search tree were currently following doesn't work, we can trace back to the misleading fork and take the other path in the tree.
 
-While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.
-
+---
+While this change was beneficial for the runtime from what our tests say so far (apparently constructors are really bad for performance), the runtime reduction was *only about 20%*.\
 Some rules on the other hand changed it by a factor of at least 10 each to put it into persepective.
