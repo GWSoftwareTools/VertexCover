@@ -1,4 +1,4 @@
-package vertexCover.Application;
+package vertexCover.application;
 
 import core.Graph;
 
@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 public class TimeBenchmark {
 
     public static void main(String[] args) throws IOException {
-        int runs = 100;
+        int runs = 300;
         long timeStart = System.nanoTime();
         runAllFiles(runs);
         long completeTime = System.nanoTime() - timeStart;

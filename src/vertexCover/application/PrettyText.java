@@ -1,4 +1,4 @@
-package vertexCover.Application;
+package vertexCover.application;
 
 import vertexCover.advanced.GraphUtil;
 import vertexCover.advanced.SearchTree;

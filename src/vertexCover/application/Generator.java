@@ -1,4 +1,4 @@
-package vertexCover.Application;
+package vertexCover.application;
 
 import java.io.BufferedWriter;
 import java.io.File;

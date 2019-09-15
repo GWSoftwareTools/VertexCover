@@ -1,4 +1,4 @@
-package vertexCover.main;
+package vertexCover.advanced;
 
 import org.junit.jupiter.api.Test;
 import vertexCover.advanced.SearchTree;

@@ -1,4 +1,4 @@
-package vertexCover.main.heuristicsBenchmark;
+package vertexCover.heuristicsBenchmark;
 
 import org.junit.jupiter.api.Test;
 import vertexCover.advanced.GraphUtil;
