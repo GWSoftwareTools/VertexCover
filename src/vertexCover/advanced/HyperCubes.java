@@ -3,10 +3,11 @@ package vertexCover.advanced;
 import core.Graph;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class HyperCubes {
+class HyperCubes {
 
     /**Goes through every vertex, checks for 2 neighbours that aren't connected and looks if they are connected to
      * another 4th vertex.
@@ -43,5 +44,30 @@ public class HyperCubes {
 //        }
 
         return result;
+    }
+
+    static Set<Set<Integer>> getCubes(Graph g) {
+        return null;
+    }
+
+    static HashMap<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set <Integer> setB) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        //makes sure the vertices are ONLY connect to each other
+        for (int x : setA) {
+            Set<Integer> s = new HashSet<>(g.getNeighbours(x));
+            s.retainAll(setB);
+            if (s.size() == 1) {
+                int y = s.iterator().next();
+                s = new HashSet<>(g.getNeighbours(y));
+                s.retainAll(setA);
+                if (s.size() == 1) {
+                    map.put(x,y);
+                    map.put(y,x);
+                }
+            }
+        }
+
+        return map;
     }
 }
