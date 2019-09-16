@@ -6,7 +6,8 @@ import java.util.*;
 
 class HyperCubes {
 
-    /**Goes through every vertex, checks for 2 neighbours that aren't connected and looks if they are connected to
+    /**
+     * Goes through every vertex, checks for 2 neighbours that aren't connected and looks if they are connected to
      * another 4th vertex.
      *
      * @param g The target graph
@@ -19,11 +20,11 @@ class HyperCubes {
 
             for (int a : g.getNeighbours(key)) {
                 for (int b : g.getNeighbours(key)) {
-                    if (!g.adjacent(a,b) && a!=b) {
+                    if (!g.adjacent(a, b) && a != b) {
 
                         for (int fourth : g.getNeighbours(a)) {
-                            if (g.adjacent(fourth,b) && !g.adjacent(key, fourth) && fourth != key) {
-                                result.add(new HashSet<>(Arrays.asList(key,a,b,fourth)));
+                            if (g.adjacent(fourth, b) && !g.adjacent(key, fourth) && fourth != key) {
+                                result.add(new HashSet<>(Arrays.asList(key, a, b, fourth)));
                             }
                         }
                     }
@@ -32,6 +33,7 @@ class HyperCubes {
         }
         return result;
     }
+
     static Set<Set<Integer>> getHigherDimHyperCubes(Graph g, Set<Set<Integer>> oldCubes) {
         Set<Set<Integer>> result = new HashSet<>();
 
@@ -52,20 +54,20 @@ class HyperCubes {
         return result;
     }
 
-    static Map<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set<Integer> setB) {
+    static Map<Integer, Integer> vertexMapping(Graph g, Set<Integer> setA, Set<Integer> setB) {
         HashMap<Integer, Integer> map = new HashMap<>();
 
         //makes sure the vertices are ONLY connect to each other
         for (int x : setA) {
-            Set<Integer> s = new HashSet<>(g.getNeighbours(x));
+            Set<Integer> s = g.getNeighbours(x);
             s.retainAll(setB);
             if (s.size() == 1) {
                 int y = s.iterator().next();
-                s = new HashSet<>(g.getNeighbours(y));
+                s = g.getNeighbours(y);
                 s.retainAll(setA);
                 if (s.size() == 1) {
-                    map.put(x,y);
-                    map.put(y,x);
+                    map.put(x, y);
+                    map.put(y, x);
                 }
             }
         }
@@ -73,18 +75,19 @@ class HyperCubes {
         return map;
     }
 
-    /**Works ONLY with a correct map from "vertexMapping"
+    /**
+     * Works ONLY with a correct map from "vertexMapping"
      *
-     * @param g The target graph
+     * @param g   The target graph
      * @param map Bijective map from the vertex-set "s" to another vertex-set.
      * @param set One of the sets from the map, doesn't matter which one
      * @return Checks if for EVERY adjacent pair of vertices in one set their mappings in the other set
      * are also adjacent.
      */
-    static boolean hasHyperConnection (Graph g, Map<Integer, Integer> map, Set<Integer> set) {
+    static boolean hasHyperConnection(Graph g, Map<Integer, Integer> map, Set<Integer> set) {
         for (int a : set) {
             for (int b : g.getNeighbours(a)) {
-                if(set.contains(b) && !g.adjacent(map.get(a), map.get(b))) {    //only neighbours in set
+                if (set.contains(b) && !g.adjacent(map.get(a), map.get(b))) {    //only neighbours in set
                     return false;
                 }
             }
