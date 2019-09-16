@@ -2,10 +2,7 @@ package vertexCover.advanced;
 
 import core.Graph;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 class HyperCubes {
 
@@ -50,7 +47,7 @@ class HyperCubes {
         return null;
     }
 
-    static HashMap<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set <Integer> setB) {
+    static Map<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set<Integer> setB) {
         HashMap<Integer, Integer> map = new HashMap<>();
 
         //makes sure the vertices are ONLY connect to each other
@@ -69,5 +66,24 @@ class HyperCubes {
         }
 
         return map;
+    }
+
+    /**
+     *
+     * @param g The target graph
+     * @param map Bijective map from the vertex-set "s" to another vertex-set.
+     * @param s One of the sets from the map, doesn't matter which one
+     * @return Checks if for every pair of vertices in one set their mappings in the other set are also adjacent.
+     * Returns false if for any pair this is condition is false.
+     */
+    static boolean hasHyperConnection (Graph g, Map<Integer, Integer> map, Set<Integer> s) {
+        for (int a : s) {
+            for (int b : g.getNeighbours(a)) {
+                if(!g.adjacent(map.get(a), map.get(b))) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
