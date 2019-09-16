@@ -108,4 +108,24 @@ class HyperCubesTest {
         rects = HyperCubes.getRects(g);
         assertEquals(0, HyperCubes.getHigherDimHyperCubes(g, rects).size());
     }
+
+    @Test
+    void splitHyperCubeTest() {
+        Set<Integer> s = new HashSet<>(Arrays.asList(1,2,3,4,5,6,7,8));
+
+        LinkedList<Set<Integer>> splitSet = HyperCubes.splitHyperCube(g, s);
+
+        assertEquals(4,splitSet.get(0).size());
+        assertEquals(4,splitSet.get(1).size());
+        for (int a : splitSet.get(0))
+            for (int b : splitSet.get(0))
+                if (a != b)
+                    assertFalse(g.adjacent(a,b));
+        for (int a : splitSet.get(1))
+            for (int b : splitSet.get(1))
+                if (a != b)
+                    assertFalse(g.adjacent(a,b));
+
+
+    }
 }

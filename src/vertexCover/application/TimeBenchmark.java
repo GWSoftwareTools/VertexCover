@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 public class TimeBenchmark {
 
     public static void main(String[] args) throws IOException {
-        int runs = 300;
+        int runs = 1000;
         long timeStart = System.nanoTime();
         runAllFiles(runs);
         long completeTime = System.nanoTime() - timeStart;

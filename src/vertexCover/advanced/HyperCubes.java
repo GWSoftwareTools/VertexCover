@@ -39,7 +39,7 @@ class HyperCubes {
 
         for (Set<Integer> setA : oldCubes) {
             for (Set<Integer> setB : oldCubes) {
-                if (!setA.equals(setB)) {
+                if (setA != setB) {
 
                     Map<Integer, Integer> map = vertexMapping(g, setA, setB);
                     if (hasHyperConnection(g, map, setA)) {
@@ -71,7 +71,6 @@ class HyperCubes {
                 }
             }
         }
-
         return map;
     }
 
@@ -93,5 +92,48 @@ class HyperCubes {
             }
         }
         return true;
+    }
+
+    static LinkedList<Set<Integer>> splitHyperCube(Graph g, Set<Integer> hCube) {
+        Set<Integer> setA = new HashSet<>();
+        Set<Integer> setB = new HashSet<>();
+        int first = hCube.iterator().next();
+        setA.add(first);
+
+        while (setA.size() + setB.size() < hCube.size()) {
+            for (int a : setA) {
+                setB.addAll(g.getNeighbours(a));
+            }
+            for (int b : setB) {
+                setA.addAll(g.getNeighbours(b));
+            }
+        }
+        LinkedList<Set<Integer>> result = new LinkedList<>();
+        result.add(setA);
+        result.add(setB);
+        return result;
+    }
+
+    static boolean hyperCubeHalfConnected(Graph g, Set<Integer> hCube) {
+        LinkedList<Set<Integer>> ll = splitHyperCube(g, hCube);
+        boolean firstIsolated = true, secondIsolated = true;
+
+        for (int i : ll.get(0)) {
+            for (int nb : g.getNeighbours(i)) {
+                if (!hCube.contains(nb)) {
+                    firstIsolated = false;
+                    break;
+                }
+            }
+        }
+        for (int i : ll.get(1)) {
+            for (int nb : g.getNeighbours(i)) {
+                if (!hCube.contains(nb)) {
+                    secondIsolated = false;
+                    break;
+                }
+            }
+        }
+        return firstIsolated || secondIsolated;
     }
 }
