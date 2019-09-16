@@ -44,7 +44,24 @@ class HyperCubes {
     }
 
     static Set<Set<Integer>> getCubes(Graph g) {
-        return null;
+        Set<Set<Integer>> cubes = new HashSet<>();
+        Set<Set<Integer>> rects = getRects(g);
+
+        for (Set<Integer> setA : rects) {
+            for (Set<Integer> setB : rects) {
+                if (!setA.equals(setB)) {
+
+                    Map<Integer, Integer> map = vertexMapping(g, setA, setB);
+                    if (hasHyperConnection(g, map, setA)) {
+                        HashSet<Integer> cube = new HashSet<>();
+                        cube.addAll(setA);
+                        cube.addAll(setB);
+                        cubes.add(cube);
+                    }
+                }
+            }
+        }
+        return cubes;
     }
 
     static Map<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set<Integer> setB) {
@@ -68,18 +85,18 @@ class HyperCubes {
         return map;
     }
 
-    /**
+    /**Works ONLY with a correct map from "vertexMapping"
      *
      * @param g The target graph
      * @param map Bijective map from the vertex-set "s" to another vertex-set.
-     * @param s One of the sets from the map, doesn't matter which one
-     * @return Checks if for every pair of vertices in one set their mappings in the other set are also adjacent.
-     * Returns false if for any pair this is condition is false.
+     * @param set One of the sets from the map, doesn't matter which one
+     * @return Checks if for EVERY adjacent pair of vertices in one set their mappings in the other set
+     * are also adjacent.
      */
-    static boolean hasHyperConnection (Graph g, Map<Integer, Integer> map, Set<Integer> s) {
-        for (int a : s) {
+    static boolean hasHyperConnection (Graph g, Map<Integer, Integer> map, Set<Integer> set) {
+        for (int a : set) {
             for (int b : g.getNeighbours(a)) {
-                if(!g.adjacent(map.get(a), map.get(b))) {
+                if(set.contains(b) && !g.adjacent(map.get(a), map.get(b))) {    //only neighbours in set
                     return false;
                 }
             }
