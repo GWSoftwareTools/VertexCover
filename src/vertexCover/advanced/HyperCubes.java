@@ -30,25 +30,13 @@ class HyperCubes {
                 }
             }
         }
-
-        //the same rectangle will be found multiple times from all 4 directions
-//        for (Set a : result) {
-//            for (Set b : result) {
-//                if (a.equals(b) && a!=b) {
-//                    result.remove(b);
-//                }
-//            }
-//        }
-
         return result;
     }
+    static Set<Set<Integer>> getHigherDimHyperCubes(Graph g, Set<Set<Integer>> oldCubes) {
+        Set<Set<Integer>> result = new HashSet<>();
 
-    static Set<Set<Integer>> getCubes(Graph g) {
-        Set<Set<Integer>> cubes = new HashSet<>();
-        Set<Set<Integer>> rects = getRects(g);
-
-        for (Set<Integer> setA : rects) {
-            for (Set<Integer> setB : rects) {
+        for (Set<Integer> setA : oldCubes) {
+            for (Set<Integer> setB : oldCubes) {
                 if (!setA.equals(setB)) {
 
                     Map<Integer, Integer> map = vertexMapping(g, setA, setB);
@@ -56,12 +44,12 @@ class HyperCubes {
                         HashSet<Integer> cube = new HashSet<>();
                         cube.addAll(setA);
                         cube.addAll(setB);
-                        cubes.add(cube);
+                        result.add(cube);
                     }
                 }
             }
         }
-        return cubes;
+        return result;
     }
 
     static Map<Integer, Integer> vertexMapping (Graph g, Set<Integer> setA, Set<Integer> setB) {

@@ -100,8 +100,12 @@ class HyperCubesTest {
     }
 
     @Test
-    void getCubesTest() {
-        Set<Set<Integer>> cubes = HyperCubes.getCubes(g);
-        assertEquals(1,cubes.size());
+    void higherDimCubesTest() {
+        Set<Set<Integer>> rects = HyperCubes.getRects(g);
+        assertEquals(1, HyperCubes.getHigherDimHyperCubes(g, rects).size());
+
+        g.addEdge(1,8);
+        rects = HyperCubes.getRects(g);
+        assertEquals(0, HyperCubes.getHigherDimHyperCubes(g, rects).size());
     }
 }
