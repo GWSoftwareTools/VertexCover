@@ -2,7 +2,8 @@ package vertexCover.application;
 
 import core.Graph;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.*;
 
 /**

@@ -67,5 +67,4 @@ public class UndoStack {
         tail = ui;
         size++;
     }
-
 }

@@ -1,10 +1,10 @@
 package vertexCover.heuristicsBenchmark;
 
+import core.Graph;
+import core.Instance;
 import org.junit.jupiter.api.Test;
 import vertexCover.advanced.GraphUtil;
 import vertexCover.advanced.SearchTree;
-import core.Instance;
-import core.Graph;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +44,6 @@ class LowerBound {
 
     @Test
     void noPrep() throws IOException {
-        System.out.println("\n" + GraphUtil.getLowerBound(new Graph(new File("data\\out.adjnoun_adjacency_adjacency")), true));
+        System.out.println("\n" + GraphUtil.getLowerBound(new Graph(new File("data" + File.separator + "out.adjnoun_adjacency_adjacency")), true));
     }
 }

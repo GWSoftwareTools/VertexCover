@@ -3,11 +3,14 @@ package core;
 import vertexCover.advanced.UndoStack;
 
 import java.io.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Graph {
-    private HashMap<Integer, HashSet<Integer>> edges;
-    private UndoStack undoStack;
+    private final HashMap<Integer, HashSet<Integer>> edges;
+    private final UndoStack undoStack;
 
     public Graph() {
         edges = new HashMap<>();

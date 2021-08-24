@@ -1,7 +1,7 @@
 package vertexCover.advanced;
 
-import core.Instance;
 import core.Graph;
+import core.Instance;
 
 import java.util.Collections;
 import java.util.HashSet;
